@@ -1,0 +1,64 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~\workspaces\general\SpringMaven
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 pom.xml
+badd +1 [INFO]\ Finished\ at:\ 2015-03-06T16
+badd +1 src\main\resources\ApplicationContext.xml
+badd +17 src\main\java\hello\HelloWorld.java
+badd +668 \Users\emrahs\_vimrc
+badd +1 src\main\java\hello\dao\TraceRecordDAO.java
+badd +1 src\main\java\hello\dao\TraceRecordDetailDAO.java
+badd +1 dependency-reduced-pom.xml
+badd +0 src\main\java\hello\MessagePrinter.java
+silent! argdel *
+edit \Users\emrahs\.vimprojects
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+wincmd t
+set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 30 + 78) / 157)
+exe 'vert 2resize ' . ((&columns * 126 + 78) / 157)
+argglobal
+let s:l = 87 - ((86 * winheight(0) + 27) / 55)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+87
+normal! 0
+wincmd w
+argglobal
+edit src\main\java\hello\MessagePrinter.java
+let s:l = 34 - ((33 * winheight(0) + 27) / 55)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+34
+normal! 0
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 30 + 78) / 157)
+exe 'vert 2resize ' . ((&columns * 126 + 78) / 157)
+tabnext 1
+if exists('s:wipebuf')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=1 shortmess=filnxtToO
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

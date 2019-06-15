@@ -1,0 +1,96 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~/
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 ~/Dropbox/SyncApps/vim_configuration_files/vim/bundle/Personal/plugin/SessionProject.vim
+badd +20 /Volumes/MACHDD2/Development/Vision/workspace/firstTut/BlurImage.cpp
+badd +1 /Volumes/MACHDD2/Development/Vision/workspace/firstTut/CMakeLists.txt
+badd +6 /Volumes/MACHDD2/Development/Vision/workspace/firstTut/CMakeCache.txt
+badd +1 /Volumes/MACHDD2/Development/Vision/workspace/firstTut/cmake_install.cmake
+badd +1 /Volumes/MACHDD2/Development/Vision/workspace/firstTut/BlurImage
+badd +14 loadImage.cpp
+badd +1 ~/.vimrc
+badd +6 CMakeLists.txt
+badd +17 CMakeCache.txt
+badd +1 cmake_install.cmake
+badd +5 run.sh
+badd +3 loadVideo.cpp
+badd +3 trackbar.cpp
+badd +1 ~/Google\ Drive/calismalar/BAU\ Notlar/2.donem/Computer\ Vision/notlar.taskpaper
+badd +60 /Volumes/MACHDD2/Development/Vision/workspace/hough/houghLine.cpp
+badd +6 /Volumes/MACHDD2/Development/Vision/workspace/hough/CMakeLists.txt
+badd +1 ~/Google\ Drive/calismalar/BAU\ Notlar/2.donem/Computer\ Vision/HW01/test.m
+badd +3 simpleTransformation.cpp
+argglobal
+silent! argdel *
+edit trackbar.cpp
+set splitbelow splitright
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+let s:l = 1 - ((0 * winheight(0) + 27) / 55)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit ~/.vimrc
+set splitbelow splitright
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+let s:l = 519 - ((38 * winheight(0) + 27) / 55)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+519
+normal! 0
+tabnew
+set splitbelow splitright
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+enew
+tabedit ~/Google\ Drive/calismalar/BAU\ Notlar/2.donem/Computer\ Vision/notlar.taskpaper
+set splitbelow splitright
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+let s:l = 1 - ((0 * winheight(0) + 27) / 55)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit ~/Google\ Drive/calismalar/BAU\ Notlar/2.donem/Computer\ Vision/HW01/test.m
+set splitbelow splitright
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+let s:l = 1 - ((0 * winheight(0) + 27) / 55)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabnext 5
+if exists('s:wipebuf')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=1 shortmess=filnxtToO
+set winminheight=1 winminwidth=1
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

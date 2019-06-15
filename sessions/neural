@@ -1,0 +1,7 @@
+development=~/Google\ Drive/calismalar/BAU\ Notlar/3.donem/CMP5133\ -\ Artificial\ Neural\ Networks/dev {
+ multiPerceptron1.m
+ multiPerceptron2.m
+ octave-workspace
+ singlePerceptron.m
+ tutorial.m
+}
