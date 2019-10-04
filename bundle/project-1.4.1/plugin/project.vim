@@ -1232,6 +1232,7 @@ function! s:Project(filename) " <<<
         nnoremap <buffer> <silent> <C-^> <Nop>
         "nnoremap <script> <Plug>ProjectOnly :let lzsave=&lz<CR>:set lz<CR><C-W>o:Project<CR>:silent! wincmd p<CR>:let &lz=lzsave<CR>:unlet lzsave<CR>
         nnoremap <script> <Plug>ProjectOnly :call <SID>DoProjectOnly()<CR>
+        nnoremap <buffer> <silent> <LocalLeader>p :call <SID>DoPreview()<CR>
         if match(g:proj_flags, '\Cm') != -1
             if !hasmapto('<Plug>ProjectOnly')
                 nmap <silent> <unique> <C-W>o <Plug>ProjectOnly
@@ -1261,6 +1262,16 @@ function! s:Project(filename) " <<<
         setlocal nobuflisted
     endif
 endfunction " >>>
+
+function! s:DoPreview()
+    let line = line('.')
+    let fname = trim(getline('.'))
+    let fname=escape(fname, ' %#')        " Thanks to Thomas Link for cluing me in on % and #
+    let infoline = s:RecursivelyConstructDirectives(line)
+    let home=s:GetHome(infoline, '').'/'
+    let fname = home.fname
+    silent exec '!/usr/bin/qlmanage -p '.fname
+endfunction
 
 if exists(':Project') != 2
     command -nargs=? -complete=file Project call <SID>Project('<args>')

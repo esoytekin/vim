@@ -35,8 +35,8 @@ function! s:runShellCommand(cmdline)
 endfunction
 
 function! s:createBuffer() abort
-  if(bufexists("__javavim__"))
-      let winnr = bufwinnr("__javavim__")
+  let winnr = bufwinnr("__javavim__")
+  if(winnr > -1)
       call s:goto_win(winnr)
       setlocal modifiable
       call s:clearBuffer()
@@ -78,13 +78,13 @@ endfunction
 
 func! s:runJava()
 " a:firstline, a:lastline secili satirlari alir
+    let workingDirectory = getcwd() . "/target"
     let package = s:getPackage()
     let class = s:getClass()
-    let command = "silent Shell java -cp ./bin " . package . class
+    let command = "java -cp " . workingDirectory . " " . package . class
     "let command = "java -cp ./bin " . package . class
 
-    execute command
-    "call s:runShellCommand(command)
+    call s:runShellCommand(command)
 endfunc
 
 function! s:getPackage() abort
@@ -110,7 +110,11 @@ function! s:getClass() abort
 endfunction
 
 function! javavim#RunJavaWithCompile()
-    exec "w | silent !javac -d %:p:h/bin %:p:h/*.java"
+    let workingDirectory = getcwd() . "/target"
+    if !isdirectory(workingDirectory)
+        call mkdir(workingDirectory,"p")
+    endif
+    exec "w | silent !javac -d ".workingDirectory." %:p:h/*.java"
     call s:runJava()
 endfunction
 function! javavim#RunJavaWithMaven() abort
@@ -215,6 +219,9 @@ endfunction
 
 func! javavim#GetPacketInfo()
     let path = matchstr(expand("%:p:h"),".*src/.*/java/\\zs.*")
+    if (empty(path))
+        return join(split(expand("%:p:h"),"/")[1:],".")
+    endif
     return substitute(path,"/",".","g")
 endfunc
 
@@ -226,7 +233,6 @@ function! javavim#NewFile() abort
     let package = javavim#GetPacketInfo()
     if(empty(package))
      silent! g/package/d
-     d
     else
         silent! %s/%PACKAGE%/\=package
     endif
@@ -237,11 +243,14 @@ endfunction
 
 augroup javavimbindings
     autocmd! javavimbindings
-    autocmd Filetype java nnoremap <buffer> <silent><Leader>xr :call javavim#RunJavaWithMaven()<CR>
-    autocmd Filetype java nnoremap <buffer> <silent><Leader>xta :call javavim#RunTest()<CR>
-    autocmd Filetype java nnoremap <buffer> <silent><Leader>xtm :call javavim#RunTestMethod()<CR>
-    autocmd Filetype java nnoremap <buffer> <silent>q  :call javavim#Wipeout()<CR>
-    autocmd Filetype java nnoremap <buffer> <silent>imp  :call javavim#JavaInsertImport()<CR>
+    autocmd Filetype java nnoremap <buffer> <silent><Leader>xr :call javavim#RunJavaWithMaven()
+    autocmd Filetype java nnoremap <buffer> <silent><Leader>xta :call javavim#RunTest()
+    autocmd Filetype java nnoremap <buffer> <silent><Leader>xtm :call javavim#RunTestMethod()
+    autocmd Filetype java nnoremap <buffer> <silent>imp  :call javavim#JavaInsertImport()
     autocmd BufNewFile *.java call javavim#NewFile()
-    autocmd Filetype java command! RunJavaWithCompile :call javavim#RunJavaWithCompile()<CR>
+    autocmd Filetype java command! JavaRunCompile :call javavim#RunJavaWithCompile()
+    autocmd Filetype java command! JavaRunMaven :call javavim#RunJavaWithMaven()
 augroup end
+
+
+let &l:makeprg="mvn"

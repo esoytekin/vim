@@ -73,8 +73,8 @@ function! GotoLine(linePattern)"{{{
 
  endif
 endfunction"}}}
-" More simple gather function, lists search results"{{{
-function! GatherSimple(pattern)
+" More simple gather function, lists search results
+function! GatherSimple(pattern)"{{{
 
   if !empty(a:pattern)
      execute "g/".a:pattern
@@ -83,8 +83,8 @@ function! GatherSimple(pattern)
 
 endfunction"}}}
 
-" prompt user for line number"{{{
-function! GatherSimpleAndGotoLine(pattern)
+" prompt user for line number
+function! GatherSimpleAndGotoLine(pattern)"{{{
   if !empty(a:pattern)
      execute a:pattern
   endif
