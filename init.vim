@@ -364,7 +364,7 @@ set splitright
 
 "nmap <silent> <leader>ctags :!(cd %:p:h;ctags *)&
 "nmap <silent> <leader>t :TlistToggle<CR>
-nmap <silent> <leader>t :TagbarToggle<CR>
+nmap <silent> <leader>tb :TagbarToggle<CR>
 
 
 "Project plugin settings
