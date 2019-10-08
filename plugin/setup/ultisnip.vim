@@ -16,7 +16,8 @@ function! Tab_Snippet_Complete()
   return manualcomplete
 endfunction
 
-noremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
 
 " Vim's popup menu doesn't select the first completion item, but rather just
 " inserts the longest common text of all matches; and the menu will come up
