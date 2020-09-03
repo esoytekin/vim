@@ -412,3 +412,15 @@
 [submodule "bundle/ctrlp.vim"]
 	path = bundle/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "bundle/ant.vim"]
+	path = bundle/ant.vim
+	url = git@github.com:esoytekin/ant.vim
+[submodule "bundle/neocomplete.vim"]
+	path = bundle/neocomplete.vim
+	url = https://github.com/Shougo/neocomplete.vim
+[submodule "bundle/vim-jsx-pretty"]
+	path = bundle/vim-jsx-pretty
+	url = https://github.com/MaxMEllon/vim-jsx-pretty
+[submodule "bundle/vim-graphql"]
+	path = bundle/vim-graphql
+	url = https://github.com/jparise/vim-graphql
